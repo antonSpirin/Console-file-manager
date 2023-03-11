@@ -7,17 +7,17 @@ import random
 def create_folder():
     folder_name = input('Enter folder name: ')
     # проверка на существование
-    if not os.path.exists(f'new{folder_name}'):
+    if not os.path.exists(folder_name):
         # создать папку передаем путь
-        os.mkdir(f'new{folder_name}')
+        os.mkdir(folder_name)
 
 
 def delete_folder_file():
     folder_file_name = input('Enter folder or file name: ')
     # проверка на существование
-    if os.path.exists(f'new{folder_file_name}'):
+    if os.path.exists(folder_file_name):
         # удалить папку передаем путь
-        os.rmdir(f'new{folder_file_name}')
+        os.rmdir(folder_file_name)
 
 
 def copy_folder_file():
@@ -35,7 +35,7 @@ def victory_birth(dict_names, count_names):
         if date_of_birth == dict_names.get(select_names[i]):
             print(f'Вы угадали! {select_names[i]} родился {date_of_birth}!')
         else:
-            print(f'Вы не угадали! {select_names[i]} родился {date_of_birth}!')
+            print(f'Вы не угадали! {select_names[i]} родился {dict_names.get(select_names[i])}!')
     pass
 
 def transaction(history_transaction, positiv_negativ_numb):

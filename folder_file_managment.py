@@ -1,3 +1,7 @@
+import os
+import platform
+
+
 from function import *
 from library import dict_celeb
 
@@ -27,20 +31,36 @@ while True:
         copy_folder_file()
         pass
     elif choice == '4':
-        os.getcwd()
+        path = os.getcwd()
+        print(path)
+        print(os.listdir())
+        # for root, dirs, files in os.walk(path):
+        #     for dir in dirs:
+        #         print('Каталог:', os.path.join(root, dir))
+        #         # for file in files:
+        #         #     print('Файлы:', os.path.join(dir,file))
         pass
     elif choice == '5':
-        # !!!!!!!!!!!!!
-
+        list_dir = os.listdir()
+        list_folder = []
+        for i in range(len(list_dir)):
+            if os.path.isdir(list_dir[i]) == True:
+                list_folder.append(list_dir[i])
+        print(list_folder)
         pass
     elif choice == '6':
-        os.listdir()
+        list_dir = os.listdir()
+        list_files = []
+        for i in range(len(list_dir)):
+            if os.path.isfile(list_dir[i]) == True:
+                list_files.append(list_dir[i])
+        print(list_files)
         pass
     elif choice == '7':
-        os.uname()
+        print(platform.platform()) # os.uname() - не работает
         pass
     elif choice == '8':
-        os.getpid()
+        print(os.getlogin())
         pass
     elif choice == '9':
         repeat_prog = 'да'
@@ -80,12 +100,15 @@ while True:
                 print('Неверный пункт меню')
         pass
     elif choice == '11':
-        print(f'The current path of your directory: {print(os.getcwd())}') # текущая директория C:\Users\spiri\PycharmProjects\Console-file-manager
-        path=input('Enter path new_dir:  ')
+        print(
+            f'The current path of your directory: {print(os.getcwd())}')  # текущая директория C:\Users\spiri\PycharmProjects\Console-file-manager
+        path = input('Enter path new_dir:  ') #work5_console_file_manager создавал для пробы
         while not os.path.exists(path):
-            os.makedirs(path) #- создаёт new directory
+            os.makedirs(path)  # - создаёт new directory
             print(f'New directory {path} create ')
         os.chdir(path)
+        pass
+    elif choice == '12':
         break
     else:
         print('Неверный пункт меню')
