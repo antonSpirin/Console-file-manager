@@ -3,6 +3,7 @@ import platform
 
 from function import *
 from library import dict_celeb
+import json
 
 while True:
     print('Menu management folder and file directory:')
@@ -59,7 +60,12 @@ while True:
             repeat_prog = input('Если хотите начать игру сначала, введите - да, если не хотите - введите нет: ')
         pass
     elif choice == '10':
+        FILE_NAME = 'my_account.data'
         history_transaction = []
+        # if os.path.exists(FILE_NAME):
+        #     with open(FILE_NAME, 'r') as f:
+        #         history_transaction = json.load(f)
+
         print('Добро пожаловать в ваш электроный кошелек!')
 
         while True:
@@ -85,6 +91,9 @@ while True:
                 balance_func(history_transaction)
                 pass
             elif choice == '5':
+                with open(FILE_NAME, 'w') as f:
+                    json.dump(history_transaction, f)
+
                 break
             else:
                 print('Неверный пункт меню')

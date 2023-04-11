@@ -2,6 +2,7 @@ import os
 import sys
 import shutil
 import random
+import datetime
 
 
 def create_folder(folder_name='new folder'):
@@ -26,7 +27,6 @@ def delete_folder_file():
         else:
             os.remove(folder_file_name)
         return print('True')
-
 
 
 def copy_folder_file(folder_file_name=0, new_folder_file_name=0):
@@ -83,25 +83,29 @@ def random_names(dict_names, count_names):
 
 def transaction(history_transaction, positiv_negativ_numb):
     balance = 0
-    for i in range(len(history_transaction)):
-        balance += history_transaction[i]
+    dt_now = str(datetime.datetime.now())  # время транзакзии
     if positiv_negativ_numb > 0:
-        add_transaction = float(input('Ввведите сумму , которую вы хотите внести на ваш счёт: '))
+        add_transaction = {dt_now: float(input('Ввведите сумму , которую вы хотите внести на ваш счёт: '))}
         history_transaction.append(add_transaction)
     else:
-        add_transaction = float(input('Ввведите сумму вашей покупки: '))
-        if add_transaction <= balance:
-            add_transaction = add_transaction * -1  # умножаем на -1 для того что бы сумма добавлялась с минусом, это покупка
+        for i in history_transaction:
+            summ = list(i.values())  # dict_values из пары транзакция и дата
+            balance += summ[0]
+        add_transaction = {dt_now: float(input('Ввведите сумму вашей покупки: '))}
+
+        if add_transaction[dt_now] <= balance:
+            add_transaction[dt_now] *= -1  # умножаем на -1 для того что бы сумма добавлялась с минусом, это покупка
             history_transaction.append(add_transaction)
         else:
             print('Сумма покупки превышает ваш баланс')
-    # print(history_transaction)
+
 
 
 def balance_func(history_transaction):
     balance = 0
-    for i in range(len(history_transaction)):
-        balance += history_transaction[i]
+    for i in history_transaction:
+        summ = list(i.values()) # dict_values из пары транзакция и дата
+        balance += summ[0]
     print(f'Ваш баланс: {balance} $')
     return balance
 
@@ -109,11 +113,12 @@ def balance_func(history_transaction):
 def history_buy(history_transaction):
     buy_list = []
     all_summ_buy = 0
-    for i in range(len(history_transaction)):
-        if history_transaction[i] < 0:
-            buy_list.append(history_transaction[i])
-            all_summ_buy += history_transaction[i]
-            print(f'Покупка: {history_transaction[i]} $')
+    for i in history_transaction:
+        summ = list(i.values())  # dict_values из пары транзакция и дата
+        if summ[0] < 0:
+            buy_list.append(i)
+            all_summ_buy += summ[0]
+            print(f'Покупка: {i} $')
 
     print(f'Общая сумма покупок: {all_summ_buy * -1} $')
     return buy_list
