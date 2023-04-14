@@ -81,30 +81,43 @@ def random_names(dict_names, count_names):
     return select_names
 
 
-def transaction(history_transaction, positiv_negativ_numb):
+def transaction(history_transaction, positiv_negativ_numb,
+                add_transaction=0):  # add_transaction=0 - добавлен параметр для возможности тестирования
+    # positiv_negativ_numb - параметр показывает какую операцию хошет выполнить пользователь, пополнить счет или совершить покупку
     balance = 0
     dt_now = str(datetime.datetime.now())  # время транзакзии
     if positiv_negativ_numb > 0:
-        add_transaction = {dt_now: float(input('Ввведите сумму , которую вы хотите внести на ваш счёт: '))}
-        history_transaction.append(add_transaction)
+        if add_transaction == 0:
+            add_transaction = {dt_now: float(input('Ввведите сумму , которую вы хотите внести на ваш счёт: '))}
+            history_transaction.append(add_transaction)
+        else:
+            add_transaction = {dt_now: add_transaction}
+            history_transaction.append(add_transaction)
+        for i in history_transaction:
+            summ = list(i.values())  # dict_values из пары транзакция и дата
+            balance += summ[0]
+        return balance
     else:
         for i in history_transaction:
             summ = list(i.values())  # dict_values из пары транзакция и дата
             balance += summ[0]
-        add_transaction = {dt_now: float(input('Ввведите сумму вашей покупки: '))}
-
+        if add_transaction == 0:
+            add_transaction = {dt_now: float(input('Ввведите сумму вашей покупки: '))}
+        else:
+            add_transaction = {dt_now: add_transaction}
         if add_transaction[dt_now] <= balance:
             add_transaction[dt_now] *= -1  # умножаем на -1 для того что бы сумма добавлялась с минусом, это покупка
             history_transaction.append(add_transaction)
+            return True
         else:
             print('Сумма покупки превышает ваш баланс')
-
+            return False
 
 
 def balance_func(history_transaction):
     balance = 0
     for i in history_transaction:
-        summ = list(i.values()) # dict_values из пары транзакция и дата
+        summ = list(i.values())  # dict_values из пары транзакция и дата
         balance += summ[0]
     print(f'Ваш баланс: {balance} $')
     return balance
