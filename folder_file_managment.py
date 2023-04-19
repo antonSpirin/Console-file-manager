@@ -23,13 +23,13 @@ while True:
 
     choice = input('Select a menu item: ')
     if choice == '1':
-        create_folder()
+        new_create = decorate_complete(create_folder)
         pass
     elif choice == '2':
-        delete_folder_file()
+        new_delete = decorate_complete(delete_folder_file)
         pass
     elif choice == '3':
-        copy_folder_file()
+        new_copy = decorate_complete(copy_folder_file)
         pass
     elif choice == '4':
         path = os.getcwd()
@@ -44,23 +44,18 @@ while True:
         with open(FILE_NAME_WORK_DIRECTORY, 'w') as f:
             json.dump(work_directory, f)
 
-        #  for root, dirs, files in os.walk(path):
-        #      for dir in dirs:
-        #          print('Каталог:', os.path.join(root, dir))
-        #          for file in files:
-        #              print('Файлы:', os.path.join(dir,file))
         pass
     elif choice == '5':
-        print(view_folders())
+        decorate_complete(view_folders)
         pass
     elif choice == '6':
-        print(view_files())
+        decorate_complete(view_files())
         pass
     elif choice == '7':
-        print(platform.platform())  # os.uname() - не работает
+        decorate_complete(platform.platform)  # os.uname() - не работает
         pass
     elif choice == '8':
-        print(os.getlogin())
+        decorate_complete(os.getlogin)
         pass
     elif choice == '9':
         repeat_prog = 'да'
@@ -79,14 +74,12 @@ while True:
         if os.path.exists(FILE_NAME_HISTORY):
             with open(FILE_NAME_HISTORY, 'r') as f:
                 history_transaction = json.load(f)
-
         if os.path.exists(FILE_NAME_BALANCE):
             with open(FILE_NAME_BALANCE, 'r') as f:
                 balance = json.load(f)
         if os.path.exists(FILE_NAME_BUY):
             with open(FILE_NAME_BUY, 'r') as f:
                 buy_history = json.load(f)
-
         print('Добро пожаловать в ваш электроный кошелек!')
 
         while True:
@@ -107,17 +100,19 @@ while True:
                 pass
             elif choice == '3':
                 buy_history = history_buy(history_transaction)
+                # decorate_complete(buy_history) - ???
                 pass
             elif choice == '4':
-                balance = balance_func(history_transaction)
+                balance =balance_func(history_transaction)
+                # decorate_complete(balance)- ???
                 pass
             elif choice == '5':
                 with open(FILE_NAME_HISTORY, 'w') as f:
-                    json.dump(history_transaction, f)
+                    json.dump(history_transaction, f, indent=2)
                 with open(FILE_NAME_BALANCE, 'w') as f:
-                    json.dump(balance, f)
+                    json.dump(balance, f, indent=2)
                 with open(FILE_NAME_BUY, 'w') as f:
-                    json.dump(buy_history, f)
+                    json.dump(buy_history, f, indent=2)
 
                 break
             else:
@@ -141,7 +136,7 @@ while True:
         FILE_NAME_WORK_DIRECTORY = 'listdir.txt'
         if os.path.exists(FILE_NAME_WORK_DIRECTORY):
             with open(FILE_NAME_WORK_DIRECTORY, 'r') as f:
-                data=json.load(f)
+                data = json.load(f)
         with open(FILE_NAME_WORK_DIRECTORY, 'w') as f:
             json.dump(data, f, indent=4)
 

@@ -11,7 +11,7 @@ def test_listdir():
     # print(path)
     # print(os.listdir(path))
     assert 'folder1' in os.listdir(path)
-    assert 'folder2' in os.listdir(path)
+    assert 'folder3' in os.listdir(path)
     assert 'function.py' in os.listdir(path)
     assert 'library.py' in os.listdir(path)
 
@@ -58,3 +58,8 @@ def test_transaction_history():
     assert balance_func(history_test) == summa
     assert transaction(history_test, -1, summa) == True
     assert len(history_buy(history_test)) == 2
+
+
+def test_delete_folder_file():
+    create_folder('test_name')
+    delete_folder_file('test_name') == True
